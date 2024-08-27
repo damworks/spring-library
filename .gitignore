@@ -1,6 +1,10 @@
-HELP.md
+# Maven specific files
 target/
+*.log
+.mvn/
 !.mvn/wrapper/maven-wrapper.jar
+
+HELP.md
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -14,10 +18,11 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
+out/
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +36,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# General IDE files
+Thumbs.db
+
+# Mac specific files
+.DS_Store
