@@ -1,0 +1,45 @@
+services:
+  library:
+    build: .
+    container_name: library
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/library
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+    networks:
+      - library-network
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: library
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      - library-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    depends_on:
+      - mysql-db
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql-db
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - library-network
+
+networks:
+  library-network:
