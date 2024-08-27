@@ -3,6 +3,7 @@ target/
 *.log
 .mvn/
 !.mvn/wrapper/maven-wrapper.jar
+.env
 
 HELP.md
 !**/src/main/**/target/
