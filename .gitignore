@@ -43,3 +43,5 @@ Thumbs.db
 
 # Mac specific files
 .DS_Store
+
+/data/mysql/
