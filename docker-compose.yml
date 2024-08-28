@@ -1,33 +1,38 @@
 services:
-  library:
-    build: .
-    container_name: library
-    ports:
-      - "8080:8080"
-      - "5005:5005"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/library
-      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
-      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
-    networks:
-      - library-network
-    depends_on:
-      - mysql-db
+  #library:
+  #  build: .
+  #  container_name: library
+  #  ports:
+  #    - "8080:8080"
+  #    - "5005:5005"
+  #  environment:
+  #    - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/library
+  #    - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+  #    - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+  #  networks:
+  #    - library-network
+  #  depends_on:
+  #    - mysql-db
 
   mysql-db:
-    image: mysql:8.0
+    platform: linux/x86_64
+    image: mysql:8.0.25
     container_name: mysql-db
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: library
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./data/mysql:/var/lib/mysql
+      - ./data/dumps:/var/dumps
     networks:
       - library-network
 
   phpmyadmin:
+    platform: linux/x86_64
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     depends_on:
@@ -35,9 +40,11 @@ services:
     ports:
       - "8081:80"
     environment:
-      PMA_HOST: mysql-db
-      PMA_USER: ${DB_USERNAME}
-      PMA_PASSWORD: ${DB_PASSWORD}
+      - PMA_ARBITRARY=0
+      - PMA_HOST=${DB_HOST}
+      #- PMA_USER=${DB_USERNAME}
+      #- PMA_PASSWORD=${DB_PASSWORD}
+      #- PMA_PORT=${DB_PORT}
     networks:
       - library-network
 
