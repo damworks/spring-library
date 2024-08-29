@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/loans")
+@RequestMapping("/api/v1/loans")
 public class LoanController {
     @Autowired
     private LoanService loanService;

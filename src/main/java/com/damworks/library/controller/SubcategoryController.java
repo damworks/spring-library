@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/subcategories")
+@RequestMapping("/api/v1/subcategories")
 public class SubcategoryController {
     @Autowired
     private SubcategoryService subcategoryService;

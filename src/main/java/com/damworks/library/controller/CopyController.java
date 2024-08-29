@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/copies")
+@RequestMapping("/api/v1/copies")
 public class CopyController {
     @Autowired
     private CopyService copyService;
